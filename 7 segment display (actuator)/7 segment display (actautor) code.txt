@@ -1,0 +1,48 @@
+// Define Arduino pins for segments a through g
+const int segA = 2;
+const int segB = 3;
+const int segC = 4;
+const int segD = 5;
+const int segE = 6;
+const int segF = 7;
+const int segG = 8;
+
+void setup() {
+  // Set all segment pins as outputs
+  for (int pin = 2; pin <= 8; pin++) {
+    pinMode(pin, OUTPUT);
+  }
+}
+
+void loop() {
+  displayDigit(0); delay(1000); // Show 0
+  displayDigit(1); delay(1000); // Show 1
+  displayDigit(2); delay(1000); // Show 2
+  displayDigit(3); delay(1000); // Show 3
+}
+
+// Helper function to turn segments on (1) or off (0)
+void displayDigit(int digit) {
+  if (digit == 0) {
+    // Turn on everything except the middle bar (g)
+    digitalWrite(segA, 1); digitalWrite(segB, 1); digitalWrite(segC, 1);
+    digitalWrite(segD, 1); digitalWrite(segE, 1); digitalWrite(segF, 1);
+    digitalWrite(segG, 0);
+  } 
+  else if (digit == 1) {
+    // Turn on only the right side bars (b and c)
+    digitalWrite(segA, 0); digitalWrite(segB, 1); digitalWrite(segC, 1);
+    digitalWrite(segD, 0); digitalWrite(segE, 0); digitalWrite(segF, 0);
+    digitalWrite(segG, 0);
+  } 
+  else if (digit == 2) {
+    digitalWrite(segA, 1); digitalWrite(segB, 1); digitalWrite(segC, 0);
+    digitalWrite(segD, 1); digitalWrite(segE, 1); digitalWrite(segF, 0);
+    digitalWrite(segG, 1);
+  } 
+  else if (digit == 3) {
+    digitalWrite(segA, 1); digitalWrite(segB, 1); digitalWrite(segC, 1);
+    digitalWrite(segD, 1); digitalWrite(segE, 0); digitalWrite(segF, 0);
+    digitalWrite(segG, 1);
+  }
+}

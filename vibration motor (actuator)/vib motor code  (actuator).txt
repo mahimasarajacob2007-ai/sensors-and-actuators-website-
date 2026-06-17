@@ -1,0 +1,15 @@
+const int motorPin = 9; // Vibration motor controlled by pin D9
+
+void setup() {
+  pinMode(motorPin, OUTPUT); // Set motor pin as output
+}
+
+void loop() {
+  // Turn vibration ON for 1 second
+  digitalWrite(motorPin, HIGH); 
+  delay(1000);
+  
+  // Turn vibration OFF for 2 seconds
+  digitalWrite(motorPin, LOW); 
+  delay(2000);
+}

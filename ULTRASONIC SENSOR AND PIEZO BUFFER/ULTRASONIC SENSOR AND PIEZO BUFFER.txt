@@ -1,0 +1,48 @@
+// Pin Assignments
+const int TRIG_PIN = 2;
+const int ECHO_PIN = 3;
+const int BUZZER_PIN = 4;
+
+void setup() {
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  Serial.begin(9600); // For viewing distance measurements
+}
+
+void loop() {
+  // Clear the trigger pin
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  
+  // Set the trigger pin high for 10 microseconds to send out sonic pulse
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  
+  // Measure the duration of the returning sound wave in microseconds
+  long duration = pulseIn(ECHO_PIN, HIGH);
+  
+  // Calculate distance in centimeters (Speed of sound is 0.034 cm/us)
+  long distance = duration * 0.034 / 2;
+  
+  // Print distance to Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Trigger buzzer alarm if an object is within 30 centimeters
+  if (distance > 0 && distance <= 30) {
+    // Map the proximity to frequency (closer = higher pitch tone)
+    int pitch = map(distance, 2, 30, 1500, 500); 
+    
+    // Map the proximity to delay (closer = faster individual beeps)
+    int beepDelay = map(distance, 2, 30, 50, 400); 
+
+    tone(BUZZER_PIN, pitch, 50); // Play tone
+    delay(beepDelay);            // Wait before next pulse cycle
+  } else {
+    noTone(BUZZER_PIN);          // Turn off buzzer if area is clear
+    delay(100);
+  }
+}

@@ -1,0 +1,34 @@
+const int redPin = 11;   // Red pin connected to D11
+const int greenPin = 10; // Green pin connected to D10
+const int bluePin = 9;   // Blue pin connected to D9
+
+void setup() {
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}
+
+void loop() {
+  // 1. Show Red
+  setColor(255, 0, 0); 
+  delay(1000);
+  
+  // 2. Show Green
+  setColor(0, 255, 0); 
+  delay(1000);
+  
+  // 3. Show Blue
+  setColor(0, 0, 255); 
+  delay(1000);
+  
+  // 4. Mix Purple (Red + Blue)
+  setColor(170, 0, 255); 
+  delay(1000);
+}
+
+// Helper function to easily mix colors (values from 0 to 255)
+void setColor(int redValue, int greenValue, int blueValue) {
+  analogWrite(redPin, redValue);
+  analogWrite(greenPin, greenValue);
+  analogWrite(bluePin, blueValue);
+}

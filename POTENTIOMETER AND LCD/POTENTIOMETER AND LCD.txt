@@ -1,0 +1,15 @@
+#include <LiquidCrystal.h> // Include the standard library
+
+// Initialize the library by associating the correct Arduino interface pins
+// Layout order: RS, Enable, D4, D5, D6, D7
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);          // Tell Arduino it is a 16x2 character screen
+  lcd.print("Hello, World!"); // Print message on the top row
+}
+
+void loop() {
+  lcd.setCursor(0, 1);       // Move cursor to column 0, row 1 (bottom row)
+  lcd.print("Tinkercad Fun"); // Print message on the bottom row
+}

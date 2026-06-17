@@ -1,0 +1,34 @@
+#include <Servo.h>
+
+// --- Pin Assignments ---
+const int LDR_PIN = A0;    // Analog input pin from the LDR junction
+const int SERVO_PIN = 9;   // PWM digital output pin to the Servo motor
+
+// --- Object Declarations ---
+Servo myServo;             // Create a servo object to manage the motor
+
+void setup() {
+  myServo.attach(SERVO_PIN);  // Link the servo object to digital pin 9
+  Serial.begin(9600);         // Start the Serial Monitor to watch data values
+}
+
+void loop() {
+  // Read the raw analog voltage from the light sensor (0 to 1023)
+  int lightLevel = analogRead(LDR_PIN);
+  
+  // Print the raw sensor value to the Tinkercad Serial Monitor
+  Serial.print("Light Value: ");
+  Serial.println(lightLevel);
+
+  // Map the light readings directly to the servo's physical movement range (0 to 180 degrees).
+  // In Tinkercad, the LDR range spans from roughly 54 (dark) to 974 (bright light).
+  int angle = map(lightLevel, 54, 974, 0, 180);
+  
+  // Safety constraint to keep the output strictly within standard physical limits
+  angle = constrain(angle, 0, 180);
+
+  // Send the calculated position command to the micro servo motor
+  myServo.write(angle);
+  
+  delay(20); // Small pause to let the motor physically move to its position
+}

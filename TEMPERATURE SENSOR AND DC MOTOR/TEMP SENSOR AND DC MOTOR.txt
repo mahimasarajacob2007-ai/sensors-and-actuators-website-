@@ -1,0 +1,34 @@
+// --- Pin Assignments ---
+const int TEMP_PIN = A1;   // Analog input pin from TMP36
+const int MOTOR_PIN = 3;   // Digital output pin to Transistor Base
+
+// --- Temperature Settings ---
+const float TEMP_THRESHOLD = 30.0; // Fan turns on above 30 degrees Celsius
+
+void setup() {
+  pinMode(MOTOR_PIN, OUTPUT); // Set motor control pin as an Output
+  Serial.begin(9600);         // Start Serial Monitor for testing
+}
+
+void loop() {
+  // Read raw analog data from TMP36 (0 to 1023)
+  int rawVoltage = analogRead(TEMP_PIN);
+  
+  // Convert raw value to millivolts, then calculate Celsius temperature
+  float voltage = rawVoltage * (5.0 / 1023.0);
+  float temperatureC = (voltage - 0.5) * 100.0;
+  
+  // Print temperature data to the Serial Monitor
+  Serial.print("Temperature: ");
+  Serial.print(temperatureC);
+  Serial.println(" C");
+
+  // Control logic for the DC Motor cooling fan
+  if (temperatureC > TEMP_THRESHOLD) {
+    digitalWrite(MOTOR_PIN, HIGH); // Turn the fan ON
+  } else {
+    digitalWrite(MOTOR_PIN, LOW);  // Turn the fan OFF
+  }
+  
+  delay(500); // Wait half a second before reading temperature again
+}

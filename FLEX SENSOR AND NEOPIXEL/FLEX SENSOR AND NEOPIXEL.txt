@@ -1,0 +1,43 @@
+#include <Adafruit_NeoPixel.h>
+
+const int FLEX_PIN = A0;      
+const int NEO_PIN = 6;        
+const int NUM_PIXELS = 16;    
+
+Adafruit_NeoPixel ring(NUM_PIXELS, NEO_PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  ring.begin();
+  ring.show();            
+  ring.setBrightness(50); 
+  Serial.begin(9600);     
+}
+
+void loop() {
+  int flexValue = analogRead(FLEX_PIN);
+  
+  Serial.print("Flex Sensor Raw Value: ");
+  Serial.println(flexValue);
+
+  // FIX: Maps the real Tinkercad scale where 256 is flat and 93 is fully bent
+  int numLedsToLight = map(flexValue, 256, 93, 0, NUM_PIXELS);
+  numLedsToLight = constrain(numLedsToLight, 0, NUM_PIXELS);
+
+  ring.clear();
+
+  for (int i = 0; i < NUM_PIXELS; i++) {
+    if (i < numLedsToLight) {
+      // Color transition: Green when flat (256), turning Red when bent (93)
+      int redStrength = map(flexValue, 256, 93, 0, 255);
+      int greenStrength = map(flexValue, 256, 93, 255, 0);
+      
+      redStrength = constrain(redStrength, 0, 255);
+      greenStrength = constrain(greenStrength, 0, 255);
+
+      ring.setPixelColor(i, ring.Color(redStrength, greenStrength, 0));
+    }
+  }
+
+  ring.show();
+  delay(50); 
+}

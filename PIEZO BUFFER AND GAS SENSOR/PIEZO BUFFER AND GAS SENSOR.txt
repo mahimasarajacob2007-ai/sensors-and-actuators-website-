@@ -1,0 +1,24 @@
+const int gasPin = A0;   // Gas sensor connected to A0
+const int buzzerPin = 8; // Buzzer connected to D13
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT); // Set buzzer as output
+  Serial.begin(9600);         // Start monitor to watch gas levels
+}
+
+void loop() {
+  int gasValue = analogRead(gasPin); // Read smoke levels (0 to 1023)
+  
+  Serial.print("Gas Level: ");
+  Serial.println(gasValue);
+  
+  // If gas level goes above 400, trigger the buzzer
+  if (gasValue > 400) {
+    digitalWrite(buzzerPin, HIGH); 
+  } else {
+    digitalWrite(buzzerPin, LOW);  
+  }
+  
+  delay(200); 
+}
+

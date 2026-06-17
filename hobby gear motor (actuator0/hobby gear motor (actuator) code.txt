@@ -1,0 +1,15 @@
+const int motorPin = 9; // Motor controlled by Digital Pin 9
+
+void setup() {
+  pinMode(motorPin, OUTPUT); // Set motor pin as output
+}
+
+void loop() {
+  // Turn motor ON for 3 seconds
+  digitalWrite(motorPin, HIGH); 
+  delay(3000);
+  
+  // Turn motor OFF for 2 seconds
+  digitalWrite(motorPin, LOW); 
+  delay(2000);
+}
