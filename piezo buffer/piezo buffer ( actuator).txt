@@ -1,0 +1,19 @@
+const int piezoPin = 8; // Piezo positive pin connected to D8
+
+void setup() {
+  pinMode(piezoPin, OUTPUT); // Set the piezo pin as an output
+}
+
+void loop() {
+  // Step 1: Play a high-pitched beep for 1 second
+  tone(piezoPin, 1000); // Send a 1000Hz frequency sound
+  delay(1000);          // Keep buzzing for 1000 milliseconds
+  
+  // Step 2: Play a lower-pitched beep for 1 second
+  tone(piezoPin, 500);  // Send a 500Hz frequency sound
+  delay(1000);          // Keep buzzing for 1000 milliseconds
+  
+  // Step 3: Turn the sound completely off for 2 seconds
+  noTone(piezoPin);     // Stop all sound output
+  delay(2000);          // Wait 2000 milliseconds before restarting
+}

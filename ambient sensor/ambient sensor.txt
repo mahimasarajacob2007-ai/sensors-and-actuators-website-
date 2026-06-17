@@ -1,0 +1,23 @@
+const int lightPin = A0; // Sensor connected to A0
+const int ledPin = 13;   // LED connected to D13
+
+void setup() {
+  pinMode(ledPin, OUTPUT); 
+  Serial.begin(9600);      // Start monitor to watch lux levels
+}
+
+void loop() {
+  int lightValue = analogRead(lightPin); // Read light level (0 to 1023)
+  
+  Serial.print("Light Value: ");
+  Serial.println(lightValue);
+  
+  // If the light drops below 300 (it gets dark), turn on the LED
+  if (lightValue < 300) { 
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  
+  delay(100); 
+}

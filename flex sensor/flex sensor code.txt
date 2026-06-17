@@ -1,0 +1,23 @@
+const int flexPin = A0; // Flex sensor connected to A0
+const int ledPin = 13;  // LED connected to D13
+
+void setup() {
+  pinMode(ledPin, OUTPUT); 
+  Serial.begin(9600);      // Start monitor to see bend values
+}
+
+void loop() {
+  int flexValue = analogRead(flexPin); // Read bend values
+  
+  Serial.print("Bend Value: ");
+  Serial.println(flexValue);
+  
+  // If the sensor bends past a threshold, turn on the LED
+  if (flexValue > 800) { 
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  
+  delay(100); 
+}

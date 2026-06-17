@@ -1,0 +1,29 @@
+const int sensorPin = A0; // TMP36 middle pin connected to A0
+const int ledPin = 13;    // LED connected to D13
+
+void setup() {
+  pinMode(ledPin, OUTPUT); // Set LED as output
+  Serial.begin(9600);      // Start the monitor to view temperatures
+}
+
+void loop() {
+  int rawValue = analogRead(sensorPin); // Read raw value (0 to 1023)
+  
+  // Convert the raw voltage reading into Celsius temperature
+  float voltage = rawValue * (5.0 / 1023.0);
+  float temperatureC = (voltage - 0.5) * 100.0;
+  
+  // Print temperature to the Serial Monitor
+  Serial.print("Temperature: ");
+  Serial.print(temperatureC);
+  Serial.println(" C");
+  
+  // If temperature goes above 40 degrees Celsius, turn on the LED
+  if (temperatureC > 40.0) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  
+  delay(500); 
+}

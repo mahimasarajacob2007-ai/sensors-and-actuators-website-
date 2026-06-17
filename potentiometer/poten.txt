@@ -1,0 +1,21 @@
+const int potPin = A0;  // Potentiometer middle pin connected to A0
+const int ledPin = 13;  // LED connected to D13
+
+void setup() {
+  pinMode(ledPin, OUTPUT); 
+  Serial.begin(9600);      // Start monitor to watch knob values
+}
+
+void loop() {
+  int knobValue = analogRead(potPin); // Read knob position (0 to 1023)
+  
+  Serial.print("Knob Value: ");
+  Serial.println(knobValue);
+  
+  // Use the knob value as the delay time (in milliseconds)
+  digitalWrite(ledPin, HIGH); // Turn LED on
+  delay(knobValue);           
+  
+  digitalWrite(ledPin, LOW);  // Turn LED off
+  delay(knobValue);           
+}

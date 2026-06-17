@@ -1,0 +1,22 @@
+const int tiltPin = 2;  // Tilt sensor connected to D2
+const int ledPin = 13;  // LED connected to D13
+
+void setup() {
+  pinMode(tiltPin, INPUT); // Sensor sends digital data IN
+  pinMode(ledPin, OUTPUT); // LED outputs light
+  Serial.begin(9600);      // Start monitor to watch tilt status
+}
+
+void loop() {
+  int tiltState = digitalRead(tiltPin); // Read state: 1 (HIGH) or 0 (LOW)
+  
+  if (tiltState == HIGH) {
+    Serial.println("Status: TILTED! ⚠️");
+    digitalWrite(ledPin, HIGH); // Turn on warning light
+  } else {
+    Serial.println("Status: Upright.");
+    digitalWrite(ledPin, LOW);  // Keep light off
+  }
+  
+  delay(150); 
+}
